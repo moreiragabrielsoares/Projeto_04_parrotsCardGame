@@ -1,5 +1,7 @@
 let qtdCartas;
-let imgFrente = "images/front.png";
+const imgsVerso = ["src='images/bobrossparrot.gif'", "src='images/explodyparrot.gif'", "src='images/fiestaparrot.gif'", "src='images/metalparrot.gif'", "src='images/revertitparrot.gif'", "src='images/tripletsparrot.gif'", "src='images/unicornparrot.gif'"];
+let imgsVersoCartas;
+const imgsVersoQtdCartas = [];
 
 
 function perguntarQtdCartas() {
@@ -15,8 +17,24 @@ function perguntarQtdCartas() {
         alert("Número inválido!");
         }
     }
-    console.log(qtdCartas);
+
+    criarArrayImgs();
     distribuirCartas();
+}
+
+function comparador() { 
+	return Math.random() - 0.5; 
+}
+
+function criarArrayImgs() {
+    imgsVersoCartas = imgsVerso.slice(0, qtdCartas/2);
+    let contador = 0;
+    while (contador < qtdCartas/2) {
+        imgsVersoQtdCartas.push(imgsVersoCartas[contador]);
+        imgsVersoQtdCartas.push(imgsVersoCartas[contador]);
+        contador ++;
+    }
+    imgsVersoQtdCartas.sort(comparador);
 }
 
 function distribuirCartas() {
@@ -31,7 +49,7 @@ function distribuirCartas() {
                         <img src="images/front.png">
                     </div>
                     <div class="face back-face">
-                        <img src="images/bobrossparrot.gif">
+                        <img ${imgsVersoQtdCartas[contador]}>
                     </div>
                 </div>
             </div>`;
@@ -44,7 +62,7 @@ function distribuirCartas() {
                         <img src="images/front.png">
                     </div>
                     <div class="face back-face">
-                        <img src="images/bobrossparrot.gif">
+                        <img ${imgsVersoQtdCartas[contador]}>
                     </div>
                 </div>
             </div>`;
