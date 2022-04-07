@@ -3,6 +3,7 @@ const imgsVerso = ["src='images/bobrossparrot.gif'", "src='images/explodyparrot.
 let imgsVersoCartas;
 const imgsVersoQtdCartas = [];
 let cartasViradas;
+let contadorJogadas;
 
 
 function perguntarQtdCartas() {
@@ -18,7 +19,7 @@ function perguntarQtdCartas() {
         alert("Número inválido!");
         }
     }
-
+    contadorJogadas = 0;
     criarArrayImgs();
     distribuirCartas();
 }
@@ -73,11 +74,11 @@ function distribuirCartas() {
 }
 
 function virarCarta(element){
+    contadorJogadas ++;
     element.querySelector(".carta").classList.add("carta-virada");
     cartasViradas = document.querySelectorAll(".carta-virada");
     console.log(cartasViradas[0].querySelector(".back-face").innerHTML);
     console.log(cartasViradas[1].querySelector(".back-face").innerHTML);
-
     if (cartasViradas[0].querySelector(".back-face").innerHTML == cartasViradas[1].querySelector(".back-face").innerHTML) {
         cartasViradas[0].classList.add("carta-virada-definitiva");
         cartasViradas[0].classList.remove("carta-virada");
@@ -87,9 +88,23 @@ function virarCarta(element){
     } else {
         setTimeout(desvirarCartas, 1000);
     }
+
+    setTimeout(fimJogo, 1000);
 }
 
 function desvirarCartas() {
     cartasViradas[0].classList.remove("carta-virada");
     cartasViradas[1].classList.remove("carta-virada");
+}
+
+function fimJogo () {
+    const cartasViradasDefinitiva = document.querySelectorAll(".carta-virada-definitiva");
+
+    if (cartasViradasDefinitiva.length === qtdCartas) {
+        alert(`Você ganhou em ${contadorJogadas} jogadas!`);
+        let respostaNovoJogo = prompt("Você deseja jogar novamente?(sim/não)");
+        if (respostaNovoJogo === "sim") {
+            document.location.reload();
+        }
+    }
 }
