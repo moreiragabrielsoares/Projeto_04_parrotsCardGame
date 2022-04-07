@@ -2,6 +2,7 @@ let qtdCartas;
 const imgsVerso = ["src='images/bobrossparrot.gif'", "src='images/explodyparrot.gif'", "src='images/fiestaparrot.gif'", "src='images/metalparrot.gif'", "src='images/revertitparrot.gif'", "src='images/tripletsparrot.gif'", "src='images/unicornparrot.gif'"];
 let imgsVersoCartas;
 const imgsVersoQtdCartas = [];
+let cartasViradas;
 
 
 function perguntarQtdCartas() {
@@ -72,5 +73,23 @@ function distribuirCartas() {
 }
 
 function virarCarta(element){
-    element.querySelector(".carta").classList.toggle("carta-virada");
+    element.querySelector(".carta").classList.add("carta-virada");
+    cartasViradas = document.querySelectorAll(".carta-virada");
+    console.log(cartasViradas[0].querySelector(".back-face").innerHTML);
+    console.log(cartasViradas[1].querySelector(".back-face").innerHTML);
+
+    if (cartasViradas[0].querySelector(".back-face").innerHTML == cartasViradas[1].querySelector(".back-face").innerHTML) {
+        cartasViradas[0].classList.add("carta-virada-definitiva");
+        cartasViradas[0].classList.remove("carta-virada");
+        cartasViradas[1].classList.add("carta-virada-definitiva");
+        cartasViradas[1].classList.remove("carta-virada");
+        console.log("Feito");
+    } else {
+        setTimeout(desvirarCartas, 1000);
+    }
+}
+
+function desvirarCartas() {
+    cartasViradas[0].classList.remove("carta-virada");
+    cartasViradas[1].classList.remove("carta-virada");
 }

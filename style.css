@@ -75,6 +75,10 @@ body {
     transform: rotateY(180deg);
 }
 
+.carta-virada-definitiva{
+    transform: rotateY(180deg);
+}
+
 @media (max-width: 767px) {
     .titulo {
         font-size: 36px;
