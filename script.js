@@ -45,9 +45,9 @@ function distribuirCartas() {
 
     while (contador < qtdCartas) {
         container.querySelector(".linha1-cartas").innerHTML += `
-            <div class="flip-container" onclick="virarCarta(this)">
+            <div class="flip-container">
                 <div class="carta">
-                    <div class="face front-face">
+                    <div class="face front-face" onclick="virarCarta(this)">
                         <img src="images/front.png">
                     </div>
                     <div class="face back-face">
@@ -58,9 +58,9 @@ function distribuirCartas() {
         contador ++;
 
         container.querySelector(".linha2-cartas").innerHTML += `
-            <div class="flip-container" onclick="virarCarta(this)">
+            <div class="flip-container">
                 <div class="carta">
-                    <div class="face front-face">
+                    <div class="face front-face" onclick="virarCarta(this)">
                         <img src="images/front.png">
                     </div>
                     <div class="face back-face">
@@ -74,17 +74,17 @@ function distribuirCartas() {
 }
 
 function virarCarta(element){
+    element.removeAttribute("onclick");
     contadorJogadas ++;
-    element.querySelector(".carta").classList.add("carta-virada");
+    element.parentNode.classList.add("carta-virada");
     cartasViradas = document.querySelectorAll(".carta-virada");
-    console.log(cartasViradas[0].querySelector(".back-face").innerHTML);
-    console.log(cartasViradas[1].querySelector(".back-face").innerHTML);
     if (cartasViradas[0].querySelector(".back-face").innerHTML == cartasViradas[1].querySelector(".back-face").innerHTML) {
         cartasViradas[0].classList.add("carta-virada-definitiva");
         cartasViradas[0].classList.remove("carta-virada");
         cartasViradas[1].classList.add("carta-virada-definitiva");
         cartasViradas[1].classList.remove("carta-virada");
-        console.log("Feito");
+        cartasViradas[0].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
+        cartasViradas[1].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
     } else {
         setTimeout(desvirarCartas, 1000);
     }
@@ -95,6 +95,8 @@ function virarCarta(element){
 function desvirarCartas() {
     cartasViradas[0].classList.remove("carta-virada");
     cartasViradas[1].classList.remove("carta-virada");
+    cartasViradas[0].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
+    cartasViradas[1].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
 }
 
 function fimJogo () {
