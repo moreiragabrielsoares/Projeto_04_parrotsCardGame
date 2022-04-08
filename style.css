@@ -16,6 +16,14 @@ body {
     text-align: center;
 }
 
+.relogio {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .container-jogo {
     padding: 0 50px;
     display: flex;

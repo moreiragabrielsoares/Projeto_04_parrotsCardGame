@@ -4,7 +4,13 @@ let imgsVersoCartas;
 const imgsVersoQtdCartas = [];
 let cartasViradas;
 let contadorJogadas;
+let segundos = 0;
+let idInterval;
 
+function relogio () {
+    segundos ++;
+    document.querySelector(".relogio").innerHTML = segundos;
+}
 
 function perguntarQtdCartas() {
 
@@ -19,6 +25,8 @@ function perguntarQtdCartas() {
         alert("Número inválido!");
         }
     }
+
+    idInterval = setInterval (relogio, 1000);
     contadorJogadas = 0;
     criarArrayImgs();
     distribuirCartas();
@@ -101,7 +109,8 @@ function fimJogo () {
     const cartasViradasDefinitiva = document.querySelectorAll(".carta-virada-definitiva");
 
     if (cartasViradasDefinitiva.length === qtdCartas) {
-        alert(`Você ganhou em ${contadorJogadas} jogadas!`);
+        clearInterval(idInterval);
+        alert(`Você ganhou em ${contadorJogadas} jogadas e em ${segundos} segundos!`);
         let respostaNovoJogo = prompt("Você deseja jogar novamente?(sim/não)");
         if (respostaNovoJogo === "sim") {
             document.location.reload();
