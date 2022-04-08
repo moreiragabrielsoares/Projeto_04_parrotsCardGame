@@ -83,8 +83,6 @@ function virarCarta(element){
         cartasViradas[0].classList.remove("carta-virada");
         cartasViradas[1].classList.add("carta-virada-definitiva");
         cartasViradas[1].classList.remove("carta-virada");
-        cartasViradas[0].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
-        cartasViradas[1].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
     } else {
         setTimeout(desvirarCartas, 1000);
     }
