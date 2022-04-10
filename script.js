@@ -6,6 +6,8 @@ let cartasViradas;
 let contadorJogadas;
 let segundos = 0;
 let idInterval;
+let controleclicks = 0;
+let respostaNovoJogo;
 
 function relogio () {
     segundos ++;
@@ -82,20 +84,25 @@ function distribuirCartas() {
 }
 
 function virarCarta(element){
-    element.removeAttribute("onclick");
-    contadorJogadas ++;
-    element.parentNode.classList.add("carta-virada");
-    cartasViradas = document.querySelectorAll(".carta-virada");
-    if (cartasViradas[0].querySelector(".back-face").innerHTML == cartasViradas[1].querySelector(".back-face").innerHTML) {
-        cartasViradas[0].classList.add("carta-virada-definitiva");
-        cartasViradas[0].classList.remove("carta-virada");
-        cartasViradas[1].classList.add("carta-virada-definitiva");
-        cartasViradas[1].classList.remove("carta-virada");
-    } else {
-        setTimeout(desvirarCartas, 1000);
-    }
+    controleclicks ++;
+    if (controleclicks < 3) {
+        element.removeAttribute("onclick");
+        contadorJogadas ++;
+        element.parentNode.classList.add("carta-virada");
+        cartasViradas = document.querySelectorAll(".carta-virada");
+        if (cartasViradas[0].querySelector(".back-face").innerHTML == cartasViradas[1].querySelector(".back-face").innerHTML) {
+            cartasViradas[0].classList.add("carta-virada-definitiva");
+            cartasViradas[0].classList.remove("carta-virada");
+            cartasViradas[1].classList.add("carta-virada-definitiva");
+            cartasViradas[1].classList.remove("carta-virada");
+            controleclicks = 0;
+        } else {
+            setTimeout(desvirarCartas, 1000);
+        }
 
-    setTimeout(fimJogo, 1000);
+        setTimeout(fimJogo, 1000);
+
+    }
 }
 
 function desvirarCartas() {
@@ -103,6 +110,7 @@ function desvirarCartas() {
     cartasViradas[1].classList.remove("carta-virada");
     cartasViradas[0].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
     cartasViradas[1].querySelector(".front-face").setAttribute("onclick", "virarCarta(this)");
+    controleclicks = 0;
 }
 
 function fimJogo () {
@@ -111,7 +119,12 @@ function fimJogo () {
     if (cartasViradasDefinitiva.length === qtdCartas) {
         clearInterval(idInterval);
         alert(`Você ganhou em ${contadorJogadas} jogadas e em ${segundos} segundos!`);
-        let respostaNovoJogo = prompt("Você deseja jogar novamente?(sim/não)");
+
+        do {
+            respostaNovoJogo = prompt("Você deseja jogar novamente?(sim/não)");
+            console.log(respostaNovoJogo);
+        } while (respostaNovoJogo !== "sim" && respostaNovoJogo !== "não");
+        
         if (respostaNovoJogo === "sim") {
             document.location.reload();
         }
